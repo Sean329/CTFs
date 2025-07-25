@@ -1,0 +1,3 @@
+[submodule "HalbornCTF_Solidity_Ethereum/lib/forge-std"]
+	path = HalbornCTF_Solidity_Ethereum/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std

@@ -4,3 +4,6 @@
 [submodule "HalbornCTF_Solidity_Ethereum/lib/openzeppelin-contracts-upgradeable"]
 	path = HalbornCTF_Solidity_Ethereum/lib/openzeppelin-contracts-upgradeable
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable
+[submodule "HalbornCTF_Solidity_Ethereum/lib/openzeppelin-contracts"]
+	path = HalbornCTF_Solidity_Ethereum/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts

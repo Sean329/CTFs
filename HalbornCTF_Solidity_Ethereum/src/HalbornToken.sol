@@ -24,7 +24,7 @@ contract HalbornToken is
     function initialize() external initializer {
         __ERC20_init("HalbornToken", "HT");
         __UUPSUpgradeable_init();
-        __Ownable_init();
+        __Ownable_init(msg.sender);
         __Multicall_init();
     }
 

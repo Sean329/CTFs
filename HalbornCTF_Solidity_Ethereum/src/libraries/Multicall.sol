@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-import {AddressUpgradeable} from "openzeppelin-contracts-upgradeable/contracts/utils/AddressUpgradeable.sol";
+import {Address} from "openzeppelin-contracts/contracts/utils/Address.sol";
 import {Initializable} from "openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol";
 
 abstract contract MulticallUpgradeable is Initializable {
@@ -15,7 +15,7 @@ abstract contract MulticallUpgradeable is Initializable {
     ) external payable returns (bytes[] memory results) {
         results = new bytes[](data.length);
         for (uint256 i = 0; i < data.length; i++) {
-            results[i] = AddressUpgradeable.functionDelegateCall(
+            results[i] = Address.functionDelegateCall(
                 address(this),
                 data[i]
             );

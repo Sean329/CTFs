@@ -5,7 +5,7 @@ import {ERC721Upgradeable} from "openzeppelin-contracts-upgradeable/contracts/to
 import {Initializable} from "openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol";
 import {UUPSUpgradeable} from "openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol";
 import {OwnableUpgradeable} from "openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol";
-import {MerkleProofUpgradeable} from "openzeppelin-contracts-upgradeable/contracts/utils/cryptography/MerkleProofUpgradeable.sol";
+import {MerkleProof} from "openzeppelin-contracts/contracts/utils/cryptography/MerkleProof.sol";
 import {MulticallUpgradeable} from "./libraries/Multicall.sol";
 
 contract HalbornNFT is
@@ -26,7 +26,7 @@ contract HalbornNFT is
     ) external initializer {
         __ERC721_init("Halborn NFT", "HNFT");
         __UUPSUpgradeable_init();
-        __Ownable_init();
+        __Ownable_init(msg.sender);
         __Multicall_init();
 
         setMerkleRoot(merkleRoot_);
@@ -46,7 +46,7 @@ contract HalbornNFT is
         require(_exists(id), "Token already minted");
 
         bytes32 node = keccak256(abi.encodePacked(msg.sender, id));
-        bool isValidProof = MerkleProofUpgradeable.verifyCalldata(
+        bool isValidProof = MerkleProof.verifyCalldata(
             merkleProof,
             merkleRoot,
             node
@@ -68,6 +68,18 @@ contract HalbornNFT is
 
     function withdrawETH(uint256 amount) external onlyOwner {
         payable(owner()).transfer(amount);
+    }
+
+    /**
+     * @dev Returns whether `tokenId` exists.
+     * 
+     * Tokens can be managed by their owner or approved accounts via {approve} or {setApprovalForAll}.
+     * 
+     * Tokens start existing when they are minted (`_mint`),
+     * and stop existing when they are burned (`_burn`).
+     */
+    function _exists(uint256 tokenId) internal view returns (bool) {
+        return _ownerOf(tokenId) != address(0);
     }
 
     function _authorizeUpgrade(address) internal override {}
